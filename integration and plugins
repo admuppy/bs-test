@@ -1,0 +1,64 @@
+integration - docs 제공 기준
+
+AWS S3
+Azure
+Bitbucket Cloud
+Bitbucket Server
+Datadog
+Gerrit
+GitHub         -> tested
+GitLab
+Gitea          -> tested
+Google GCS
+LDAP
+
+
+Plugins - 설치 플로우
+
+1. 
+npx @ 명령어로 플러그인 설치 후
+
+2.
+packages/app
+packages/backend
+의 경로에 있는 설정 파일에 (주로 App.tsx 등)
+import ~ from 으로 플러그인 불러온 후
+관련 UI를 만들어줘야함. 사이드바/버튼/링크 등등
+
+3.
+별도 설정이 필요한 플러그인의 경우, {plugin명}.tsx와 같이 별도 설정 파일을 수동으로 만든 후 docs에서 설정값을 가져와 넣어준다.
+
+4.
+yarn install - tsc - dev를 차례로 사용해 로컬에서 해당 플러그인이 동작하는지 확인 
+yarn build:backend 로 패키징
+
+**외부에서 파일을 읽어와햐 하는 플러그인들도 있다. 이 때문에 url을 읽는 별도의 플러그인을 쓸 수도 있음
+##https://backstage.io/docs/plugins/url-reader
+
+Plugins - list
+https://backstage.io/plugins/
+위 링크를 살펴보면 기본적으로 해당 플러그인들이 어떤 기능을 하는지도 간단히 소개돼 있음.
+
+----테스트 완료 플러그인 및 테스트해볼만한(?) 플러그인들----
+env 플러그인 테스트 완료, ui 및 기본 auth 플러그인 등
+CircleCI - tested (연동만)
+k8s - tested (모니터링만)
+github - tested
+techdocs - tested
+
+ArgoCD
+chatgpt playground
+CI/CD Statistics
+Github release manager(Source Control), github actions(CICD), GitHub Pull Requests(Source Control)
+gitlab
+grafana
+harbor
+jenkins
+jira
+kafka
+kiali
+keyclock
+nexus repository manager
+prometheus
+Tech Radar - 기본 설치
+Vault
