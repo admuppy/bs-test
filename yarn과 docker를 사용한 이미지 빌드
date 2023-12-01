@@ -1,3 +1,13 @@
+Versions:
+nvm: 0.39.3
+npm: 9.8.1
+node: 18.18.2
+git: 1.13.2
+yarn: 1.22.19
+
+docker.io, docker-buildx, buildah -> 그냥 latest 써도 호환
+
+
 yarn이란? facebook이 자바스크립트를 위해 2016년 개발한 패키지 시스템 
 
 yarn 명령어셋은 package.json에 정의돼 있으며, 기본 명령어는 아래와 같다.
