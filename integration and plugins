@@ -45,6 +45,7 @@ CircleCI - tested (연동만)
 k8s - tested (모니터링만)
 github - tested
 techdocs - tested
+jenkins - test ongoing - 에러 해결중
 
 ArgoCD
 chatgpt playground
@@ -53,7 +54,6 @@ Github release manager(Source Control), github actions(CICD), GitHub Pull Reques
 gitlab
 grafana
 harbor
-jenkins
 jira
 kafka
 kiali
