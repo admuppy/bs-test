@@ -27,7 +27,7 @@ backend:
 
     # Content-Security-Policy d:qirectives follow the Helmet format: https://helmetjs.github.io/#reference
     # Default Helmet Content-Security-Policy values can be removed by setting the key to false
-  cors: #Cross-Origin Resource Sharing 웹 페이지가 다른 도메인의 리소스에 대한 HTTP요청을 제한
+  cors: #Cross-Origin Resource Sharing 웹 페이지가 다른 도메인의 리소스에 대한 요청을 제한하는 것이 기본이므로 허용을 위한 규칙 필요
     Origins: http://192.168.34.113:3000, http://192.168.34.113:7007
     methods: [GET, HEAD, OPTION, POST, PUT, DELETE] ##허용할 요청관련, OPTION 및 HEAD에 주목 ##CORS의 작동 방식 3가지 가운데, Preflight 즉 예비요청 작업을 사용하는 경우 OPTION이라는 요청이 사용됨
     credentials: true #true=include모든 요청에 대해 인증 정보 포함 / same-origin 같은 출처의 요청에만 / omit은 생략
