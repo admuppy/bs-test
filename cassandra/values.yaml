@@ -1,0 +1,276 @@
+global:
+  imageRegistry: "172.17.17.100:55000"
+  imagePullSecrets: []
+  storageClass: "nfs-client"
+nameOverride: ""
+fullnameOverride: ""
+kubeVersion: ""
+commonLabels: {}
+commonAnnotations: {}
+clusterDomain: cluster.local
+extraDeploy: []
+diagnosticMode:
+  enabled: false
+  command:
+    - sleep
+  args:
+    - infinity
+image:
+  registry: docker.io
+  repository: bitnami/cassandra
+  tag: 4.1.2-debian-11-r10
+  digest: ""
+  pullPolicy: IfNotPresent
+  pullSecrets: []
+  debug: false
+dbUser:
+  user: cassandra
+  forcePassword: false
+  password: "cloud1234"
+  existingSecret: ""
+initDBConfigMap: ""
+initDBSecret: ""
+existingConfiguration: ""
+cluster:
+  name: cassandra
+  seedCount: 1
+  numTokens: 256
+  datacenter: dc1
+  rack: rack1
+  endpointSnitch: SimpleSnitch
+  internodeEncryption: none
+  clientEncryption: false
+  extraSeeds: []
+  enableUDF: false
+jvm:
+  extraOpts: ""
+  maxHeapSize: ""
+  newHeapSize: ""
+command: []
+args: []
+extraEnvVars: []
+extraEnvVarsCM: ""
+extraEnvVarsSecret: ""
+replicaCount: 3
+updateStrategy:
+  type: RollingUpdate
+hostAliases: []
+podManagementPolicy: OrderedReady
+priorityClassName: ""
+podAnnotations: {}
+podLabels: {}
+podAffinityPreset: ""
+podAntiAffinityPreset: soft
+nodeAffinityPreset:
+  type: ""
+  key: ""
+  values: []
+affinity:
+  nodeAffinity:
+    #requiredDuringSchedulingIgnoredDuringExecution:
+    #  nodeSelectorTerms:
+    #  - matchExpressions:
+    #    - key: node
+    #      operator: In
+    #      values:
+    #      - infra
+nodeSelector: {}
+tolerations:
+  - key: node
+    operator: Equal
+    value: infra
+    effect: NoSchedule
+topologySpreadConstraints: []
+podSecurityContext:
+  enabled: true
+  fsGroup: 1001
+containerSecurityContext:
+  enabled: true
+  runAsUser: 1001
+  runAsNonRoot: true
+resources:
+  limits: {}
+  requests: {}
+livenessProbe:
+  enabled: true
+  initialDelaySeconds: 60
+  periodSeconds: 30
+  timeoutSeconds: 30
+  successThreshold: 1
+  failureThreshold: 5
+readinessProbe:
+  enabled: true
+  initialDelaySeconds: 60
+  periodSeconds: 10
+  timeoutSeconds: 30
+  successThreshold: 1
+  failureThreshold: 5
+startupProbe:
+  enabled: false
+  initialDelaySeconds: 0
+  periodSeconds: 10
+  timeoutSeconds: 5
+  successThreshold: 1
+  failureThreshold: 60
+customLivenessProbe: {}
+customReadinessProbe: {}
+customStartupProbe: {}
+lifecycleHooks: {}
+schedulerName: ""
+terminationGracePeriodSeconds: ""
+extraVolumes: []
+extraVolumeMounts: []
+initContainers: []
+sidecars: []
+pdb:
+  create: false
+  minAvailable: 1
+  maxUnavailable: ""
+hostNetwork: false
+containerPorts:
+  intra: 7000
+  tls: 7001
+  jmx: 7199
+  cql: 9042
+hostPorts:
+  intra: ""
+  tls: ""
+  jmx: ""
+  cql: ""
+serviceAccount:
+  create: true
+  name: ""
+  annotations: {}
+  automountServiceAccountToken: true
+service:
+  type: ClusterIP
+  ports:
+    cql: 9042
+    metrics: 8080
+  nodePorts:
+    cql: ""
+    metrics: ""
+  extraPorts: []
+  loadBalancerIP: ""
+  loadBalancerSourceRanges: []
+  clusterIP: ""
+  externalTrafficPolicy: Cluster
+  annotations: {}
+  sessionAffinity: None
+  sessionAffinityConfig: {}
+  headless:
+    annotations: {}
+networkPolicy:
+  enabled: false
+  allowExternal: true
+persistence:
+  enabled: true
+  existingClaim: ""
+  storageClass: ""
+  commitStorageClass: ""
+  annotations: {}
+  accessModes:
+    - ReadWriteOnce
+  size: 8Gi
+  commitLogsize: 2Gi
+  mountPath: /bitnami/cassandra
+  commitLogMountPath: ""
+volumePermissions:
+  enabled: false
+  image:
+    registry: docker.io
+    repository: bitnami/bitnami-shell
+    tag: 11-debian-11-r130
+    digest: ""
+    pullPolicy: IfNotPresent
+    pullSecrets: []
+  resources:
+    limits: {}
+    requests: {}
+  securityContext:
+    runAsUser: 0
+metrics:
+  enabled: false
+  image:
+    registry: docker.io
+    pullPolicy: IfNotPresent
+    repository: bitnami/cassandra-exporter
+    tag: 2.3.8-debian-11-r133
+    digest: ""
+    pullSecrets: []
+  resources:
+    limits: {}
+    requests: {}
+  readinessProbe:
+    initialDelaySeconds: 20
+    periodSeconds: 10
+    timeoutSeconds: 45
+    failureThreshold: 3
+    successThreshold: 1
+  extraVolumeMounts: []
+  podAnnotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "8080"
+  serviceMonitor:
+    enabled: false
+    namespace: monitoring
+    interval: ""
+    scrapeTimeout: ""
+    selector: {}
+    metricRelabelings: []
+    relabelings: []
+    honorLabels: false
+    jobLabel: ""
+    labels: {}
+  containerPorts:
+    http: 8080
+    jmx: 5555
+  hostPorts:
+    http: ""
+    jmx: ""
+  configuration: |
+    host: localhost:{{ .Values.containerPorts.jmx }}
+    ssl: False
+    user:
+    password:
+    listenPort: {{ .Values.metrics.containerPorts.http }}
+    blacklist:
+      - java:lang:memorypool:.*usagethreshold.*
+      - .*:999thpercentile
+      - .*:95thpercentile
+      - .*:fifteenminuterate
+      - .*:fiveminuterate
+      - .*:durationunit
+      - .*:rateunit
+      - .*:stddev
+      - .*:meanrate
+      - .*:mean
+      - .*:min
+      - .*:viewlockacquiretime:.*
+      - .*:viewreadtime:.*
+      - .*:cas[a-z]+latency:.*
+      - .*:colupdatetimedeltahistogram:.*
+      - org:apache:cassandra:db:.*
+      - org:apache:cassandra:metrics:columnfamily:.*
+      - org:apache:cassandra:metrics:[^:]+:system[^:]*:.*
+      - com:criteo:nosql:cassandra:exporter:.*
+    maxScrapFrequencyInSec:
+      50:
+        - .*
+      3600:
+        - .*:snapshotssize:.*
+        - .*:estimated.*
+        - .*:totaldiskspaceused:.*
+tls:
+  internodeEncryption: none
+  clientEncryption: false
+  autoGenerated: false
+  existingSecret: ""
+  passwordsSecret: ""
+  keystorePassword: ""
+  truststorePassword: ""
+  certificatesSecret: ""
+  tlsEncryptionSecretName: ""
+  resources:
+    limits: {}
+    requests: {}
